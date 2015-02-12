@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+
+	<annotation-driven />
+	
+	
+	<resources mapping="/resources/**" location="/resources/" />
+	   <beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.epam.controller" />
+	<beans:bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/tiles/tiles-definitions.xml</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+			<beans:property name="order" value="2" />
+	</beans:bean>
+	
+	
+
+	<!--  <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url"
+			value="jdbc:mysql://localhost:3306/test" />
+		<beans:property name="username" value="root" />
+	</beans:bean> -->
+	<beans:bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+    	<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+   		<beans:property name="url" value="jdbc:mysql://localhost:3306/tracker"/>
+   		<beans:property name="username" value="root"/>
+   		<beans:property name="removeAbandoned" value="true"/>
+   		<beans:property name="initialSize" value="40" />
+   		<beans:property name="maxActive" value="60" />
+	</beans:bean>
+
+	<beans:bean id="SessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="annotatedClasses">
+			<beans:list>
+				<beans:value>com.epam.model.Employee</beans:value>
+				<beans:value>com.epam.model.Activity</beans:value>
+				<beans:value>com.epam.model.Assigment</beans:value>
+				<beans:value>com.epam.model.Positions</beans:value>
+				<beans:value>com.epam.model.Project</beans:value>
+				<beans:value>com.epam.model.Role</beans:value>
+				<beans:value>com.epam.model.Status</beans:value>
+				<beans:value>com.epam.model.Task</beans:value>
+				<beans:value>com.epam.model.Attachment</beans:value>
+				<beans:value>com.epam.model.Member</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</beans:prop>
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
+	<beans:bean id="employeeDao" class="com.epam.dao.EmployeeDaoImpl">
+		<beans:property name="sessionFactory" ref="SessionFactory" />
+	</beans:bean>
+	<beans:bean id="employeeService" class="com.epam.service.EmployeeServiceImpl">
+		<beans:property name="employeeDao" ref="employeeDao"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="activityDao" class="com.epam.dao.ActivityDaoImpl">
+		<beans:property name="sessionFactory" ref="SessionFactory" />
+	</beans:bean>
+	<beans:bean id="activityService" class="com.epam.service.ActivityServiceImpl">
+		<beans:property name="activityDao" ref="activityDao"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="assigmentDao" class="com.epam.dao.AssigmentDaoImpl">
+		<beans:property name="sessionFactory" ref="SessionFactory" />
+	</beans:bean>
+	<beans:bean id="assigmentService" class="com.epam.service.AssigmentServiceImpl">
+		<beans:property name="assigmentDao" ref="assigmentDao"></beans:property>
+	</beans:bean>
+	<!-- !!!! -->
+	<beans:bean id="projectDao" class="com.epam.dao.ProjectDaoImpl">
+		<beans:property name="sessionFactory" ref="SessionFactory" />
+	</beans:bean>
+	<beans:bean id="projectService" class="com.epam.service.ProjectServiceImpl">
+		<beans:property name="projectDao" ref="projectDao"></beans:property>
+	</beans:bean>
+	
+	
+	<context:component-scan base-package="com.epam" />
+	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="SessionFactory" />
+	</beans:bean>
+
+</beans:beans>

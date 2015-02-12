@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="systemDashboard" template="/WEB-INF/views/jsp/layout/layout.jsp">
+		<put-attribute name="title" value="Spring 3 MVC &amp; Apache Tiles 2" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/jsp/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/jsp/layout/body.jsp" />
+		<put-attribute name="tableName" value="" />
+	</definition>
+
+	<definition name="search" template="/WEB-INF/views/jsp/layout/layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/views/jsp/layout/header.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/jsp/layout/issue.jsp" />
+		<put-attribute name="tableName" value="" />
+	</definition>
+
+	<definition name="project" template="/WEB-INF/views/jsp/layout/layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/views/jsp/layout/header.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/jsp/layout/project.jsp" />
+		<put-attribute name="tableName" value="" />
+	</definition>
+
+	<definition name="systemDashboard" template="/WEB-INF/views/jsp/layout/layout.jsp">
+		<put-attribute name="title" value="Spring 3 MVC &amp; Apache Tiles 2" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/jsp/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/jsp/layout/body.jsp" />
+		<put-attribute name="tableName" value="" />
+	</definition>
+
+	<definition name="currentProject" template="/WEB-INF/views/jsp/layout/layout.jsp">
+		<put-attribute name="title" value="Spring 3 MVC &amp; Apache Tiles 2" />
+		<put-attribute name="header" value="/WEB-INF/views/jsp/layout/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/jsp/layout/currentProject.jsp" />
+		<put-attribute name="tableName" value="" />
+	</definition>
+
+<!-- /////////////////////////////////////////////////////////////////////////////////////// -->
+
+	<definition name="SystemDashboard" extends="systemDashboard">
+		<put-attribute name="tableName"
+			value="/WEB-INF/views/jsp/SystemDashboard.jsp" />
+	</definition>
+
+	<definition name="Search" extends="search">
+		<put-attribute name="tableName" value="/WEB-INF/views/jsp/Search.jsp" />
+	</definition>
+
+	<definition name="Project" extends="project">
+		<put-attribute name="tableName" value="/WEB-INF/views/jsp/Project.jsp" />
+	</definition>
+	
+	<definition name="CurrentProject" extends="currentProject">
+		<put-attribute name="tableName" value="/WEB-INF/views/jsp/CurrentProject.jsp" />
+	</definition>
+</tiles-definitions>
